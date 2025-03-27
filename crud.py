@@ -47,3 +47,8 @@ def sort_tasks(db: Session, sort_by: str):
     elif sort_by == "priority":
         return db.query(Task).order_by(Task.priority).all()
     return db.query(Task).all()
+
+def get_top_priority_tasks(db: Session, limit: int):
+    return db.query(Task).order_by(Task.priority.asc()).limit(limit).all()
+
+

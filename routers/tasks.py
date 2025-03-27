@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from database import SessionLocal
 import crud, schemas
@@ -35,3 +35,7 @@ def search_tasks(query: str, db: Session = Depends(get_db)):
 @router.get("/sort", response_model=list[schemas.TaskResponse])
 def sort_tasks(sort_by: str, db: Session = Depends(get_db)):
     return crud.sort_tasks(db, sort_by)
+
+@router.get("/top-priority/", response_model=list[schemas.TaskResponse])
+def get_top_priority_tasks(limit: int = Query(5, alias="limit"), db: Session = Depends(get_db)):
+    return crud.get_top_priority_tasks(db, limit)
