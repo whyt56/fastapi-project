@@ -13,6 +13,9 @@ def create_task(db: Session, task: TaskCreate):
 def get_tasks(db: Session):
     return db.query(Task).all()
 
+def get_task(db: Session, task_id: int):
+    return db.query(Task).filter(Task.id == task_id).first()
+
 def update_task(db: Session, task_id: int, task: TaskCreate):
     db_task = db.query(Task).filter(Task.id == task_id).first()
     if db_task:
